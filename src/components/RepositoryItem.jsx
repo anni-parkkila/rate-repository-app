@@ -13,7 +13,7 @@ const RepositoryItem = ({ item }) => {
   } = item;
   return (
     <View>
-      <Text color={"primary"}>
+      <Text color={"textPrimary"}>
         Full name: {fullName}
         {"\n"}
         Description: {description}
