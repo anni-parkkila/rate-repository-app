@@ -4,7 +4,7 @@ import Text from "./Text";
 const AppBarTab = ({ title, onPress }) => {
   return (
     <Pressable onPress={onPress}>
-      <Text color="white" fontSize="appBar">
+      <Text color="lightGray" fontSize="appBar">
         {title}
       </Text>
     </Pressable>

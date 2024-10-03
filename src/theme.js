@@ -2,8 +2,10 @@ const theme = {
   colors: {
     textPrimary: "#24292e",
     textSecondary: "#586069",
-    white: "#e1e5e2",
+    white: "#f5f5f5",
+    lightGray: "#e1e5e2",
     primary: "#0366d6",
+    mainBackground: "#e1e4e8",
   },
   fontSizes: {
     body: 14,
