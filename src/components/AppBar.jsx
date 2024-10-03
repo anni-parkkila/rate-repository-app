@@ -10,18 +10,18 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.textPrimary,
     paddingBottom: 15,
     paddingLeft: 15,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
-  // ...
 });
 
 const AppBar = () => {
-  const [title, setTitle] = useState("Repositories");
-
   const onPress = () => console.log("Pressed!");
 
   return (
     <View style={styles.container}>
-      <AppBarTab title={title} onPress={onPress} />
+      <AppBarTab title={"Repositories"} navigateTo={"/"} />
+      <AppBarTab title={"Sign in"} navigateTo={"/sign_in"} />
     </View>
   );
 };
