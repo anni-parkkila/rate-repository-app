@@ -1,4 +1,5 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
+import Text from "./Text";
 
 const RepositoryItem = ({ item }) => {
   const {
@@ -12,7 +13,7 @@ const RepositoryItem = ({ item }) => {
   } = item;
   return (
     <View>
-      <Text>
+      <Text color={"primary"}>
         Full name: {fullName}
         {"\n"}
         Description: {description}
