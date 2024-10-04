@@ -3,7 +3,6 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Text from "./Text";
 import theme from "../theme";
-import { useState } from "react";
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +39,6 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
-  const [inputError, setInputError] = useState(false);
   const initialValues = {
     username: "",
     password: "",

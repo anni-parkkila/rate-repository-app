@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  const onPress = () => console.log("Pressed!");
-
   return (
     <View style={styles.container}>
       <ScrollView horizontal contentContainerStyle={styles.scrollBar}>
