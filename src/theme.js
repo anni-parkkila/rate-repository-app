@@ -15,7 +15,11 @@ const theme = {
     appBar: 20,
   },
   fonts: {
-    main: "System",
+    main: {
+      ios: "Arial",
+      android: "Roboto",
+      default: "System",
+    },
   },
   fontWeights: {
     normal: "400",
