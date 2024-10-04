@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
   colorTextSecondary: {
     color: theme.colors.textSecondary,
   },
+  colorTextError: {
+    color: theme.colors.textError,
+  },
   colorPrimary: {
     color: theme.colors.primary,
   },
@@ -40,6 +43,7 @@ const Text = ({ color, fontSize, fontWeight, textAlign, style, ...props }) => {
   const textStyle = [
     styles.text,
     color === "textSecondary" && styles.colorTextSecondary,
+    color === "textError" && styles.colorTextError,
     color === "primary" && styles.colorPrimary,
     color === "white" && styles.colorWhite,
     color === "lightGray" && styles.colorLightGray,
