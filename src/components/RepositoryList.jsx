@@ -1,4 +1,4 @@
-import { FlatList, View, StyleSheet } from "react-native";
+import { Text, FlatList, View, StyleSheet } from "react-native";
 import useRepositories from "../hooks/useRepositories";
 import RepositoryItem from "./RepositoryItem";
 
@@ -15,11 +15,13 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const { loading, data } = useRepositories();
+
+  if (loading) return <Text>Loading...</Text>;
 
   // Get the nodes from the edges array
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
+  const repositoryNodes = data.repositories
+    ? data.repositories.edges.map((edge) => edge.node)
     : [];
   return (
     <View style={styles.container}>
