@@ -24,13 +24,15 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   languageWrapper: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    padding: 3,
-    maxWidth: 90,
+    flexDirection: "row",
   },
   language: {
-    textAlign: "center",
+    backgroundColor: theme.colors.primary,
+    borderRadius: 5,
+    flexGrow: 0,
+    paddingVertical: 3,
+    paddingHorizontal: 6,
+    overflow: "hidden",
   },
   detailsRow: {
     flexDirection: "row",
