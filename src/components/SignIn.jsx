@@ -82,7 +82,7 @@ const SignIn = () => {
         <Text color="textError">{formik.errors.username}</Text>
       )}
       <TextInput
-        secureTextEntry="true"
+        secureTextEntry={true}
         placeholder="Password"
         value={formik.values.password}
         onChangeText={formik.handleChange("password")}
