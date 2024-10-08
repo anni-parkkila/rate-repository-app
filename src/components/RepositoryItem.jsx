@@ -41,7 +41,7 @@ const RepositoryItem = ({ item, showButton }) => {
         <View style={styles.main}>
           <Image style={styles.tinyLogo} source={{ uri: ownerAvatarUrl }} />
           <View style={styles.mainInfo}>
-            <Text fontSize="subheading" color={"textPrimary"} fontWeight="bold">
+            <Text fontSize="subheading" color="textPrimary" fontWeight="bold">
               {fullName}
             </Text>
             <Text style={{ flexShrink: 1 }} color={"textSecondary"}>

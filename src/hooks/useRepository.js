@@ -9,8 +9,6 @@ const useRepository = ({ id }) => {
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
   });
-  console.log("here");
-  console.log("loading", loading);
 
   return { loading, data };
 };
