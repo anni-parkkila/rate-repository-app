@@ -37,7 +37,10 @@ const AppBar = () => {
         {loggedUser ? (
           <AppBarTab title={"Sign out"} navigateTo={"/"} />
         ) : (
-          <AppBarTab title={"Sign in"} navigateTo={"/sign_in"} />
+          <>
+            <AppBarTab title={"Sign in"} navigateTo={"/sign_in"} />
+            <AppBarTab title={"Sign up"} navigateTo={"/sign_up"} />
+          </>
         )}
       </ScrollView>
     </View>
