@@ -22,7 +22,8 @@ export const RepositoryListContainer = ({ repositories }) => {
 };
 
 const RepositoryList = () => {
-  const { loading, data } = useRepositories();
+  const order = { orderBy: "CREATED_AT", orderDirection: "DESC" };
+  const { loading, data } = useRepositories(order);
 
   if (loading) return <Text>Loading...</Text>;
 
