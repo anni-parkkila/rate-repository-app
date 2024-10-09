@@ -4,24 +4,26 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Text from "./Text";
 import theme from "../theme";
+import useCreateReview from "../hooks/useCreateReview";
 
 const validationSchema = yup.object().shape({
-  repositoryOwner: yup.string().required("Repository owner is required"),
+  ownerName: yup.string().required("Repository owner is required"),
   repositoryName: yup.string().required("Repository name is required"),
-  repositoryRating: yup
+  rating: yup
     .number()
+    .integer()
     .min(0, "Rating must be 0 or more")
     .max(100, "Rating must be 100 or less")
     .required("Rating is required"),
-  repositoryReview: yup.string().optional(),
+  text: yup.string().optional(),
 });
 
 export const CreateReviewContainer = ({ onSubmit }) => {
   const initialValues = {
-    repositoryOwner: "",
+    ownerName: "",
     repositoryName: "",
-    repositoryRating: "",
-    repositoryReview: "",
+    rating: "",
+    text: "",
   };
 
   const formik = useFormik({
@@ -33,17 +35,17 @@ export const CreateReviewContainer = ({ onSubmit }) => {
     <View style={styles.container}>
       <TextInput
         placeholder="Repository owner name"
-        value={formik.values.repositoryOwner}
-        onChangeText={formik.handleChange("repositoryOwner")}
+        value={formik.values.ownerName}
+        onChangeText={formik.handleChange("ownerName")}
         style={[
           styles.input,
-          formik.touched.repositoryOwner && formik.errors.repositoryOwner
+          formik.touched.ownerName && formik.errors.ownerName
             ? styles.error
             : styles.input,
         ]}
       />
-      {formik.touched.repositoryOwner && formik.errors.repositoryOwner && (
-        <Text color="textError">{formik.errors.repositoryOwner}</Text>
+      {formik.touched.ownerName && formik.errors.ownerName && (
+        <Text color="textError">{formik.errors.ownerName}</Text>
       )}
       <TextInput
         placeholder="Repository name"
@@ -61,32 +63,32 @@ export const CreateReviewContainer = ({ onSubmit }) => {
       )}
       <TextInput
         placeholder="Rating between 0 and 100"
-        value={formik.values.repositoryRating}
-        onChangeText={formik.handleChange("repositoryRating")}
+        value={formik.values.rating}
+        onChangeText={formik.handleChange("rating")}
         style={[
           styles.input,
-          formik.touched.repositoryRating && formik.errors.repositoryRating
+          formik.touched.rating && formik.errors.rating
             ? styles.error
             : styles.input,
         ]}
       />
-      {formik.touched.repositoryRating && formik.errors.repositoryRating && (
-        <Text color="textError">{formik.errors.repositoryRating}</Text>
+      {formik.touched.rating && formik.errors.rating && (
+        <Text color="textError">{formik.errors.rating}</Text>
       )}
       <TextInput
         placeholder="Review text (optional)"
-        value={formik.values.repositoryReview}
+        value={formik.values.text}
         multiline={true}
-        onChangeText={formik.handleChange("repositoryReview")}
+        onChangeText={formik.handleChange("text")}
         style={[
           styles.input,
-          formik.touched.repositoryReview && formik.errors.repositoryReview
+          formik.touched.text && formik.errors.text
             ? styles.error
             : styles.input,
         ]}
       />
-      {formik.touched.repositoryReview && formik.errors.repositoryReview && (
-        <Text color="textError">{formik.errors.repositoryReview}</Text>
+      {formik.touched.text && formik.errors.text && (
+        <Text color="textError">{formik.errors.text}</Text>
       )}
       <Pressable style={styles.button} onPress={formik.handleSubmit}>
         <Text
@@ -104,18 +106,25 @@ export const CreateReviewContainer = ({ onSubmit }) => {
 
 const CreateReview = () => {
   const navigate = useNavigate();
-  //const [signIn] = useSignIn();
+  const [createReview, result] = useCreateReview();
 
   const onSubmit = async (values) => {
-    // const { repositoryOwner, repositoryName } = values;
+    const { ownerName, repositoryName, rating, text } = values;
 
-    // try {
-    //   await signIn({ repositoryOwner, repositoryName });
-    navigate("/");
-    // } catch (e) {
-    //   console.log("catch error", e);
-    // }
-    console.log("values", values);
+    try {
+      const data = await createReview({
+        ownerName,
+        repositoryName,
+        rating,
+        text,
+      });
+      console.log("dada", data);
+      if (data.createReview.repositoryId) {
+        navigate(`/repository/${data.createReview.repositoryId}`);
+      }
+    } catch (e) {
+      console.log("catch error", e);
+    }
   };
 
   return <CreateReviewContainer onSubmit={onSubmit} />;
