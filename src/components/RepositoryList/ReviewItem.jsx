@@ -1,13 +1,41 @@
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, Alert } from "react-native";
 import { useNavigate } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import useDeleteReview from "../../hooks/useDeleteReview";
 import Text from "../Text";
 import theme from "../../theme";
 
 const ReviewItem = ({ review, showUsername, showRepositoryName }) => {
   const navigate = useNavigate();
-  const { rating, user, createdAt, text, repository } = review;
+  const [deleteReview] = useDeleteReview();
+  const { id, rating, user, createdAt, text, repository } = review;
   const date = format(parseISO(createdAt), "dd.MM.yyyy");
+
+  const onDelete = async (id) => {
+    console.log("id???", id);
+    try {
+      await deleteReview(id);
+      console.log("id taas", id);
+    } catch (e) {
+      console.log("catch error", e);
+    }
+  };
+
+  const handleDeleteReview = (id) => {
+    Alert.alert(
+      "Delete review",
+      "Are you sure you want to delete this review?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Delete", onPress: () => onDelete(id) },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.reviewContainer}>
@@ -48,7 +76,7 @@ const ReviewItem = ({ review, showUsername, showRepositoryName }) => {
           </Pressable>
           <Pressable
             style={styles.deleteButton}
-            onPress={() => console.log("pressed")}
+            onPress={() => handleDeleteReview(id)}
           >
             <Text
               color="white"

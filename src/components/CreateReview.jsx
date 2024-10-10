@@ -118,7 +118,6 @@ const CreateReview = () => {
         rating,
         text,
       });
-      console.log("dada", data);
       if (data.createReview.repositoryId) {
         navigate(`/repository/${data.createReview.repositoryId}`);
       }
