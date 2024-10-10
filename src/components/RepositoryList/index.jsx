@@ -5,8 +5,7 @@ import { useDebounce } from "use-debounce";
 import Text from "../Text";
 import useRepositories from "../../hooks/useRepositories";
 import RepositoryItem from "./RepositoryItem";
-import ListOrder from "./ListOrder";
-import SearchBar from "./SearchBar";
+import RepositoryListHeader from "./RepositoryListHeader";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
@@ -25,16 +24,12 @@ export const RepositoryListContainer = ({
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={
-          <View style={styles.listHeader}>
-            <SearchBar
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-            <ListOrder
-              setOrderBy={setOrderBy}
-              setOrderDirection={setOrderDirection}
-            />
-          </View>
+          <RepositoryListHeader
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            setOrderBy={setOrderBy}
+            setOrderDirection={setOrderDirection}
+          />
         }
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}

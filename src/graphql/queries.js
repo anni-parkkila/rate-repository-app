@@ -4,9 +4,9 @@ import { REPOSITORY_DETAILS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query Repositories(
+    $searchKeyword: String
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
-    $searchKeyword: String
   ) {
     repositories(
       orderBy: $orderBy
