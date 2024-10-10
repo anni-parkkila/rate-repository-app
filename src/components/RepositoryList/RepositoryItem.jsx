@@ -1,8 +1,8 @@
 import { View, Image, StyleSheet, Pressable } from "react-native";
 import { useNavigate } from "react-router-dom";
 import * as Linking from "expo-linking";
-import Text from "./Text";
-import theme from "../theme";
+import Text from "../Text";
+import theme from "../../theme";
 
 const RepositoryItem = ({ item, showButton }) => {
   const navigate = useNavigate();

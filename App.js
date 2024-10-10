@@ -4,7 +4,6 @@ import Constants from "expo-constants";
 import {
   MD3LightTheme as DefaultTheme,
   PaperProvider,
-  Surface,
 } from "react-native-paper";
 
 import Main from "./src/components/Main";

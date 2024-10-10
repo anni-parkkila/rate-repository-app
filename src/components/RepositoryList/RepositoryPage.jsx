@@ -2,10 +2,10 @@ import { useParams } from "react-router-native";
 import { FlatList, View, StyleSheet } from "react-native";
 import { format, parseISO } from "date-fns";
 
-import useRepository from "../hooks/useRepository";
+import useRepository from "../../hooks/useRepository";
 import RepositoryItem from "./RepositoryItem";
-import Text from "./Text";
-import theme from "../theme";
+import Text from "../Text";
+import theme from "../../theme";
 
 const ReviewItem = ({ review }) => {
   const { rating, user, createdAt, text } = review;
