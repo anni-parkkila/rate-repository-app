@@ -22,6 +22,12 @@ const paperTheme = {
     ...DefaultTheme.colors,
     primary: theme.colors.primary,
     secondary: theme.colors.textSecondary,
+    elevation: {
+      level2: theme.colors.white,
+      level3: theme.colors.white,
+    },
+    onSurface: theme.colors.textSecondary,
+    onSurfaceVariant: theme.colors.primary,
   },
 };
 

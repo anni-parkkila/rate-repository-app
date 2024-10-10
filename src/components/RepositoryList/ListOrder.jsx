@@ -46,7 +46,7 @@ export default ListOrder;
 
 const styles = StyleSheet.create({
   orderByContainer: {
-    paddingTop: 20,
+    marginTop: 10,
     flexDirection: "row",
     justifyContent: "left",
   },
