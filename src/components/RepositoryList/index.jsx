@@ -9,12 +9,48 @@ import RepositoryListHeader from "./RepositoryListHeader";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
+// export class RepositoryListContainer extends Component {
+//   renderHeader = () => {
+//     const { searchQuery, setSearchQuery, setOrderBy, setOrderDirection } =
+//       this.props;
+//     return (
+//       <RepositoryListHeader
+//         searchQuery={searchQuery}
+//         setSearchQuery={setSearchQuery}
+//         setOrderBy={setOrderBy}
+//         setOrderDirection={setOrderDirection}
+//       />
+//     );
+//   };
+
+//   render() {
+//     const { repositories } = this.props;
+//     const repositoryNodes = repositories
+//       ? repositories.edges.map((edge) => edge.node)
+//       : [];
+
+//     return (
+//       <View style={styles.container}>
+//         <FlatList
+//           ListHeaderComponent={this.renderHeader}
+//           data={repositoryNodes}
+//           ItemSeparatorComponent={ItemSeparator}
+//           renderItem={({ item }) => (
+//             <RepositoryItem key={item.id} item={item} />
+//           )}
+//         />
+//       </View>
+//     );
+//   }
+// }
+
 export const RepositoryListContainer = ({
   repositories,
   searchQuery,
   setSearchQuery,
   setOrderBy,
   setOrderDirection,
+  onEndReach,
 }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
@@ -34,6 +70,8 @@ export const RepositoryListContainer = ({
         data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         renderItem={({ item }) => <RepositoryItem key={item.id} item={item} />}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     </View>
   );
@@ -41,24 +79,33 @@ export const RepositoryListContainer = ({
 
 const RepositoryList = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchKeyword] = useDebounce(searchQuery, 500);
   const [orderBy, setOrderBy] = useState("CREATED_AT");
   const [orderDirection, setOrderDirection] = useState("DESC");
 
-  const [searchKeyword] = useDebounce(searchQuery, 500);
-  const order = { orderBy, orderDirection };
+  const { repositories, fetchMore } = useRepositories({
+    first: 4,
+    searchKeyword,
+    orderBy,
+    orderDirection,
+  });
 
-  const { loading, data } = useRepositories(searchKeyword, order);
+  // if (loading) return <Text>Loading...</Text>;
 
-  if (loading) return <Text>Loading...</Text>;
+  const onEndReach = () => {
+    console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   return (
     <View>
       <RepositoryListContainer
-        repositories={data.repositories}
+        repositories={repositories}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         setOrderBy={setOrderBy}
         setOrderDirection={setOrderDirection}
+        onEndReach={onEndReach}
       />
     </View>
   );

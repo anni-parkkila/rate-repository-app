@@ -4,11 +4,15 @@ import { REPOSITORY_DETAILS, REVIEW_DETAILS } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query Repositories(
+    $after: String
+    $first: Int
     $searchKeyword: String
     $orderBy: AllRepositoriesOrderBy
     $orderDirection: OrderDirection
   ) {
     repositories(
+      after: $after
+      first: $first
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
@@ -17,6 +21,12 @@ export const GET_REPOSITORIES = gql`
         node {
           ...RepositoryDetails
         }
+        cursor
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
