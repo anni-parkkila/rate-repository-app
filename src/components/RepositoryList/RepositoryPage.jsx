@@ -7,13 +7,18 @@ import Text from "../Text";
 
 const RepositoryPage = () => {
   const id = useParams().id;
-  const { loading, data } = useRepository({ id });
+  const { repository, fetchMore } = useRepository({ first: 6, id });
 
-  if (loading) return <Text>Loading...</Text>;
+  // if (loading) return <Text>Loading...</Text>;
 
-  const reviewNodes = data.repository
-    ? data.repository.reviews.edges.map((edge) => edge.node)
+  const reviewNodes = repository
+    ? repository.reviews.edges.map((edge) => edge.node)
     : [];
+
+  const onEndReach = () => {
+    // console.log("You have reached the end of the list");
+    fetchMore();
+  };
 
   return (
     <FlatList
@@ -23,8 +28,10 @@ const RepositoryPage = () => {
       )}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => (
-        <RepositoryItem item={data.repository} showButton={true} />
+        <RepositoryItem item={repository} showButton={true} />
       )}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
 };
