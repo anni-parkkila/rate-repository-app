@@ -7,9 +7,9 @@ import Text from "../Text";
 
 const RepositoryPage = () => {
   const id = useParams().id;
-  const { repository, fetchMore } = useRepository({ first: 6, id });
+  const { loading, repository, fetchMore } = useRepository({ first: 6, id });
 
-  // if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Text>Loading...</Text>;
 
   const reviewNodes = repository
     ? repository.reviews.edges.map((edge) => edge.node)
