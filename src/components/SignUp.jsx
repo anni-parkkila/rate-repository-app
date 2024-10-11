@@ -4,17 +4,31 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Text from "./Text";
 import theme from "../theme";
+import useSignUp from "../hooks/useSignUp";
 import useSignIn from "../hooks/useSignIn";
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required("Username is required"),
-  password: yup.string().required("Password is required"),
+  username: yup
+    .string()
+    .min(5, "Username must be at least 5 characters long")
+    .max(30, "Username must be 30 characters or less long")
+    .required("Username is required"),
+  password: yup
+    .string()
+    .min(5, "Password must be at least 5 characters long")
+    .max(50, "Password must be 50 characters or less long")
+    .required("Password is required"),
+  passwordConfirmation: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Password confirm is required"),
 });
 
-export const SignInContainer = ({ onSubmit }) => {
+export const SignUpContainer = ({ onSubmit }) => {
   const initialValues = {
     username: "",
     password: "",
+    passwordConfirmation: "",
   };
 
   const formik = useFormik({
@@ -53,6 +67,23 @@ export const SignInContainer = ({ onSubmit }) => {
       {formik.touched.password && formik.errors.password && (
         <Text color="textError">{formik.errors.password}</Text>
       )}
+      <TextInput
+        secureTextEntry={true}
+        placeholder="Password confirmation"
+        value={formik.values.passwordConfirmation}
+        onChangeText={formik.handleChange("passwordConfirmation")}
+        style={[
+          styles.input,
+          formik.touched.passwordConfirmation &&
+          formik.errors.passwordConfirmation
+            ? styles.error
+            : styles.input,
+        ]}
+      />
+      {formik.touched.passwordConfirmation &&
+        formik.errors.passwordConfirmation && (
+          <Text color="textError">{formik.errors.passwordConfirmation}</Text>
+        )}
       <Pressable style={styles.button} onPress={formik.handleSubmit}>
         <Text
           color="white"
@@ -60,21 +91,23 @@ export const SignInContainer = ({ onSubmit }) => {
           fontSize="subheading"
           textAlign="center"
         >
-          Sign in
+          Sign up
         </Text>
       </Pressable>
     </View>
   );
 };
 
-const SignIn = () => {
+const SignUp = () => {
   const navigate = useNavigate();
+  const [signUp] = useSignUp();
   const [signIn] = useSignIn();
 
   const onSubmit = async (values) => {
     const { username, password } = values;
 
     try {
+      await signUp({ username, password });
       await signIn({ username, password });
       navigate("/");
     } catch (e) {
@@ -82,10 +115,10 @@ const SignIn = () => {
     }
   };
 
-  return <SignInContainer onSubmit={onSubmit} />;
+  return <SignUpContainer onSubmit={onSubmit} />;
 };
 
-export default SignIn;
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
