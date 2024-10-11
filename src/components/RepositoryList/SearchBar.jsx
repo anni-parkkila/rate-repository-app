@@ -7,7 +7,6 @@ const SearchBar = ({ searchQuery, setSearchQuery }) => {
       placeholder="Search"
       onChangeText={setSearchQuery}
       value={searchQuery}
-      autoFocus={true}
     />
   );
 };
